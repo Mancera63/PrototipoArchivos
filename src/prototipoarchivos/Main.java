@@ -19,8 +19,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         ArchivoMaster am = new ArchivoMaster();
-        //am.escribirArchivoMaestro();
+        am.escribirArchivoMaestro();
+        System.out.println("\nSecuancial maestro\n------------------");
         am.leer_secuencual_maestro();
+        System.out.println("\nSecuancial aristas\n------------------");
         am.leer_secuencual_aristas();
         //prueba de fuego///xD ABC
         

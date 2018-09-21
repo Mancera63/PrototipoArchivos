@@ -49,7 +49,7 @@ public class ArchivoMaster {
             //int x=entrada.nextInt();
             //if(x==1){
             do {
-                //archM.seek(archM.length());
+                archM.seek(archM.length());
                 archAristas.seek(archAristas.length());
 
                 archAristas.writeChar(llave);//ingreso origen en aristas
@@ -73,12 +73,15 @@ public class ArchivoMaster {
                 y = entrada.nextInt();
                 //aqui llenas ENL checalo xD
                 if (y == 1) {
-                    archAristas.writeLong(archAristas.getFilePointer()/12);//nose si es asi checalo creo no xD
-                    if (z == 0) {
+                    //nose si es asi checalo creo no xD
+                    //if (z == 0) {
+                        //archAristas.writeLong((archAristas.getFilePointer()-12)+1);
                         //archM.writeChar(llaveDes);
                         //archM.writeLong(archAristas.getFilePointer());
-                        z = 1;
-                    }
+                       // z = 1;
+                    //}else{
+                        archAristas.writeLong(((archAristas.getFilePointer()-12)/20)+2);
+                    //}
                 } else {
                     archAristas.writeLong(0);
                     //archM.writeLong(0);
@@ -126,7 +129,10 @@ public class ArchivoMaster {
             System.out.println(leer_archi.readChar());
             System.out.println(leer_archi.readChar());
             System.out.println(leer_archi.readDouble());
+            //System.out.println(leer_archi.getFilePointer());
             System.out.println(leer_archi.readLong());
+            //System.out.println(leer_archi.getFilePointer());
+            System.out.println("");
             
         }
         leer_archi.close();
