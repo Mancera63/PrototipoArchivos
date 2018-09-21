@@ -161,39 +161,39 @@ public class ArchivoMaster {
         leer_archi.close();
     }
     
-//    void leerAleatorioMaestro()throws IOException{
-//        int n,dl;
-//        long lreg,desplazamiento;
-//        
-//        RandomAccessFile archM=new RandomAccessFile("biblioteca","r");
-//        Scanner entrada=new Scanner(System.in);
-//        archM.readInt();
-//        char nomb[]=new char[15];
-//        for(int c=0;c<nomb.length;c++){
-//            nomb[c]=archM.readChar();
-//        }
-//        archM.readDouble();
-//        lreg=archM.getFilePointer();
-//        do{
-//            System.out.println("\nIntroduce a direccion logica del registro: ");
-//            dl=entrada.nextInt();
-//            desplazamiento=(dl-1)*lreg;
-//            archM.seek(desplazamiento);
-//            llave=archM.readInt();
-//            System.out.println("\nLos datos del registro son: ");
-//            System.err.println(llave);
-//            char nombre[]=new char[15],temp;
-//            for(int c=0;c<nombre.length;c++){
-//                temp=archM.readChar();
-//                nombre[c]=temp;
-//            }
-//            new String(nombre).replace('\0',' ');
-//            System.out.println(nombre);
-//            clasificacion=archM.readDouble();
-//            System.out.println(clasificacion);
-//            System.out.println("¿OTRO LIBRO? :SI=1,NO=0 ");
-//            n=entrada.nextInt();
-//        }while(n==1);
-//        archM.close();
-//    }
+    void leerAleatorioMaestro()throws IOException{
+        int n,dl;
+        long lreg,desplazamiento;
+        
+        RandomAccessFile archM=new RandomAccessFile("terminales","r");
+        Scanner entrada=new Scanner(System.in);
+        archM.readChar();
+        char nomb[]=new char[15];
+        for(int c=0;c<nomb.length;c++){
+            nomb[c]=archM.readChar();
+        }
+        archM.readDouble();
+        lreg=archM.getFilePointer();
+        do{
+            System.out.println("\nIntroduce a direccion logica del registro: ");
+            dl=entrada.nextInt();
+            desplazamiento=(dl-1)*lreg;
+            archM.seek(desplazamiento);
+            llave=archM.readInt();
+            System.out.println("\nLos datos del registro son: ");
+            System.err.println(llave);
+            char nombre[]=new char[15],temp;
+            for(int c=0;c<nombre.length;c++){
+                temp=archM.readChar();
+                nombre[c]=temp;
+            }
+            new String(nombre).replace('\0',' ');
+            System.out.println(nombre);
+            clasificacion=archM.readDouble();
+            System.out.println(clasificacion);
+            System.out.println("¿OTRO LIBRO? :SI=1,NO=0 ");
+            n=entrada.nextInt();
+        }while(n==1);
+        archM.close();
+    }
 }
