@@ -19,6 +19,9 @@ public class ArchivoMaster {
     String ciudad, ciudadDes;
     int ady, enl;
     double distancia;
+    int posicion;
+    
+    Arbol arbol=new Arbol();
 
     void escribirArchivoMaestro() throws IOException {
         int n;
@@ -38,7 +41,12 @@ public class ArchivoMaster {
             archM.writeChar(llave);//ingreso llave en maestro
             archIndice.writeChar(llave);//llena indice con la llave
             archIndice.writeLong(((archM.getFilePointer() - 2) / 40) + 1);//pone la posicion de maestro en indice checalo xD 
-
+            posicion=(int)((archM.getFilePointer() - 2) / 40) + 1;
+            System.out.println("posicionArbol: "+posicion);
+            arbol.insertar(llave,posicion);
+            System.out.println("Arbol");
+            arbol.imprimirEntreConNivel();
+            
             System.out.println("Nombre de la ciudad");
             ciudad = entrada.next();
             buffer = new StringBuffer(ciudad);
@@ -60,6 +68,11 @@ public class ArchivoMaster {
                 archAristas.writeChar(llaveDes);//ingreso destino en aristas
                 archIndice.writeChar(llaveDes);
                 archIndice.writeLong(((archM.getFilePointer() - 2) / 40) + 1);
+                posicion=(int)((archM.getFilePointer() - 2) / 40) + 1;
+                System.out.println("posicionArbol: "+posicion);
+                arbol.insertar(llaveDes,posicion);
+                System.out.println("Arbol");
+                arbol.imprimirEntreConNivel();
 
                 System.out.println("Nombre de la ciudad");
                 ciudadDes = entrada.next();
@@ -159,41 +172,108 @@ public class ArchivoMaster {
 
         }
         leer_archi.close();
+        System.out.println("Arbol");
+        arbol.imprimirEntreConNivel();
     }
     
-    void leerAleatorioMaestro()throws IOException{
-        int n,dl;
+    void leerAleatorioBusqueda()throws IOException{
+        int n,n2,pos;
+        long dl;
         long lreg,desplazamiento;
+        char llave,llaveM;
+        long posicionI;
         
+        long lregM,dlM,desplazamientoM,ady;
+        
+        char origen,destino,destin;
+        
+        long lregA,desplazamientoA,ENL;
+        
+        
+        
+        RandomAccessFile archindice=new RandomAccessFile("indice","r");
         RandomAccessFile archM=new RandomAccessFile("terminales","r");
+        RandomAccessFile archAristas=new RandomAccessFile("aristas","r");
+        
         Scanner entrada=new Scanner(System.in);
-        archM.readChar();
-        char nomb[]=new char[15];
-        for(int c=0;c<nomb.length;c++){
-            nomb[c]=archM.readChar();
-        }
-        archM.readDouble();
-        lreg=archM.getFilePointer();
+        archindice.readChar();
+        archindice.readLong();
+        lreg=archindice.getFilePointer();
         do{
-            System.out.println("\nIntroduce a direccion logica del registro: ");
-            dl=entrada.nextInt();
+            System.out.println("Ingresa el origen");
+            origen=entrada.next().charAt(0);
+            System.out.println("Ingresa el destino");
+            destino=entrada.next().charAt(0);
+            
+            pos=arbol.buscar(origen);
+            if(pos!=0)
+                System.out.println("La posicion es: "+pos);
+            
+            dl=pos;
             desplazamiento=(dl-1)*lreg;
-            archM.seek(desplazamiento);
-            llave=archM.readInt();
+            archindice.seek(desplazamiento);
+            llave=archindice.readChar();
             System.out.println("\nLos datos del registro son: ");
-            System.err.println(llave);
-            char nombre[]=new char[15],temp;
+            System.err.println("i: "+llave);
+            posicionI=archindice.readLong();
+            System.out.println(posicionI);
+            
+            ////////////mide la longitud de registro maestro//////////////////////////
+            archM.readChar();
+            char nombre[]=new char[20],temp;
             for(int c=0;c<nombre.length;c++){
                 temp=archM.readChar();
                 nombre[c]=temp;
             }
             new String(nombre).replace('\0',' ');
             System.out.println(nombre);
-            clasificacion=archM.readDouble();
-            System.out.println(clasificacion);
-            System.out.println("¿OTRO LIBRO? :SI=1,NO=0 ");
+            archM.readChar();
+            archM.readLong();
+            lregM=archM.getFilePointer();
+            
+                ////////////////////////busqueda en maestro//////////////////////////////////////////////////
+                dlM=posicionI;
+                desplazamientoM=(dlM-1)*lregM;
+                archM.seek(desplazamientoM);
+                llaveM=archM.readChar();
+                System.out.println("\nLos datos del registro Maestro son: ");
+                System.err.println("M: "+llaveM);
+                archM.readChar();
+                System.out.println(nombre);
+                System.err.println("M: "+archM.readChar()); //aqui muestra el SIG
+                ady=archM.readLong();
+                System.err.println("M: "+ady); // aqui muestra el ADY
+            
+                ///////////////////mide la longitud de archi aristas///////////////////////////////
+                archAristas.readChar();
+                archAristas.readChar();
+                archAristas.readDouble();
+                archAristas.readLong();
+                lregA=archM.getFilePointer();
+                
+                int a=1;
+                do{
+                    desplazamientoA=(ady-1)*lregM;
+                    System.out.println("\nLos datos del registro Aristas son: ");
+                    System.out.println("A: "+archAristas.readChar());
+                    destin=archAristas.readChar();
+                    System.out.println("A: "+destin);
+                    System.out.println("A: "+archAristas.readDouble());
+                    ENL=archAristas.readLong();
+                    System.out.println("A: "+ENL);
+                    if(destin==destino){
+                        a=0;
+                    }else{
+                        ady=ENL;
+                    }
+                }while(a==1);
+                
+            
+            System.out.println("¿OTRA BUSQUEDA? :SI=1,NO=0 ");
             n=entrada.nextInt();
         }while(n==1);
+        archindice.close();
+        archAristas.close();
         archM.close();
     }
 }
