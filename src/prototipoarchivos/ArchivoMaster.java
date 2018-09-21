@@ -75,17 +75,19 @@ public class ArchivoMaster {
                 if (y == 1) {
                     //nose si es asi checalo creo no xD
                     //if (z == 0) {
-                        //archAristas.writeLong((archAristas.getFilePointer()-12)+1);
-                        //archM.writeChar(llaveDes);
-                        //archM.writeLong(archAristas.getFilePointer());
-                       // z = 1;
+                    //archAristas.writeLong((archAristas.getFilePointer()-12)+1);
+
+                    //archM.writeLong(archAristas.getFilePointer());
+                    // z = 1;
                     //}else{
-                        archAristas.writeLong(((archAristas.getFilePointer()-12)/20)+2);
+                    archAristas.writeLong(((archAristas.getFilePointer() - 12) / 20) + 2);
                     //}
                 } else {
                     archAristas.writeLong(0);
                     //archM.writeLong(0);
                 }
+                archM.writeChar(llaveDes);
+                archM.writeChars(buffer.toString());
 
             } while (y == 1);
             //}
@@ -94,7 +96,7 @@ public class ArchivoMaster {
         } while (n == 1);
         archM.close();
     }
-    
+
     void leer_secuencual_maestro() throws IOException {
         long ap_actual, ap_final;
         //int i=1;
@@ -118,14 +120,14 @@ public class ArchivoMaster {
         }
         leer_archi.close();
     }
-    
+
     void leer_secuencual_aristas() throws IOException {
         long ap_actual, ap_final;
         //int i=1;
 
         RandomAccessFile leer_archi = new RandomAccessFile("aristas", "r");
         while ((ap_actual = leer_archi.getFilePointer()) != (ap_final = leer_archi.length())) {
-            
+
             System.out.println(leer_archi.readChar());
             System.out.println(leer_archi.readChar());
             System.out.println(leer_archi.readDouble());
@@ -133,7 +135,7 @@ public class ArchivoMaster {
             System.out.println(leer_archi.readLong());
             //System.out.println(leer_archi.getFilePointer());
             System.out.println("");
-            
+
         }
         leer_archi.close();
     }
