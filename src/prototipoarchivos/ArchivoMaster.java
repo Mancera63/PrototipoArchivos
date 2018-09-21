@@ -32,12 +32,12 @@ public class ArchivoMaster {
         do {
             archM.seek(archM.length());
             archIndice.seek(archIndice.length());
-
+            
             System.out.println("Ingresa la llave de la ciudad origen");
             llave = entrada.next().charAt(0);
             archM.writeChar(llave);//ingreso llave en maestro
             archIndice.writeChar(llave);//llena indice con la llave
-            archIndice.writeLong(archM.getFilePointer());//pone la posicion de maestro en indice checalo xD 
+            archIndice.writeLong(((archM.getFilePointer() - 2) / 40) + 1);//pone la posicion de maestro en indice checalo xD 
 
             System.out.println("Nombre de la ciudad");
             ciudad = entrada.next();
@@ -58,6 +58,8 @@ public class ArchivoMaster {
                 llaveDes = entrada.next().charAt(0);
                 //archM.writeChar(llave);//ingreso destino en maestro
                 archAristas.writeChar(llaveDes);//ingreso destino en aristas
+                archIndice.writeChar(llaveDes);
+                archIndice.writeLong(((archM.getFilePointer() - 2) / 40) + 1);
 
                 System.out.println("Nombre de la ciudad");
                 ciudadDes = entrada.next();
@@ -95,6 +97,8 @@ public class ArchivoMaster {
             n = entrada.nextInt();
         } while (n == 1);
         archM.close();
+        archAristas.close();
+        archIndice.close();
     }
 
     void leer_secuencual_maestro() throws IOException {
@@ -112,6 +116,8 @@ public class ArchivoMaster {
             }
             new String(nombre).replace('\0', ' ');
             System.out.println(nombre);
+            //System.out.println(leer_archi.readLong());
+            System.out.println("");
             //System.out.println(leer_archi.readUTF());
             //clasifica = leer_archi.readDouble();
             //System.out.println(leer_archi.readLong());
@@ -139,4 +145,55 @@ public class ArchivoMaster {
         }
         leer_archi.close();
     }
+    
+    void leer_secuencual_indice() throws IOException {
+        long ap_actual, ap_final;
+        //int i=1;
+
+        RandomAccessFile leer_archi = new RandomAccessFile("indice", "r");
+        while ((ap_actual = leer_archi.getFilePointer()) != (ap_final = leer_archi.length())) {
+
+            System.out.println(leer_archi.readChar());
+            System.out.println(leer_archi.readLong());
+            System.out.println("");
+
+        }
+        leer_archi.close();
+    }
+    
+//    void leerAleatorioMaestro()throws IOException{
+//        int n,dl;
+//        long lreg,desplazamiento;
+//        
+//        RandomAccessFile archM=new RandomAccessFile("biblioteca","r");
+//        Scanner entrada=new Scanner(System.in);
+//        archM.readInt();
+//        char nomb[]=new char[15];
+//        for(int c=0;c<nomb.length;c++){
+//            nomb[c]=archM.readChar();
+//        }
+//        archM.readDouble();
+//        lreg=archM.getFilePointer();
+//        do{
+//            System.out.println("\nIntroduce a direccion logica del registro: ");
+//            dl=entrada.nextInt();
+//            desplazamiento=(dl-1)*lreg;
+//            archM.seek(desplazamiento);
+//            llave=archM.readInt();
+//            System.out.println("\nLos datos del registro son: ");
+//            System.err.println(llave);
+//            char nombre[]=new char[15],temp;
+//            for(int c=0;c<nombre.length;c++){
+//                temp=archM.readChar();
+//                nombre[c]=temp;
+//            }
+//            new String(nombre).replace('\0',' ');
+//            System.out.println(nombre);
+//            clasificacion=archM.readDouble();
+//            System.out.println(clasificacion);
+//            System.out.println("¿OTRO LIBRO? :SI=1,NO=0 ");
+//            n=entrada.nextInt();
+//        }while(n==1);
+//        archM.close();
+//    }
 }

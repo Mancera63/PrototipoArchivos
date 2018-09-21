@@ -24,6 +24,8 @@ public class Main {
         am.leer_secuencual_maestro();
         System.out.println("\nSecuancial aristas\n------------------");
         am.leer_secuencual_aristas();
+        System.out.println("\nSecuancial Indice\n------------------");
+        am.leer_secuencual_indice();
         //prueba de fuego///xD ABC
         
     }
