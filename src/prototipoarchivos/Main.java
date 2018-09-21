@@ -19,9 +19,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         ArchivoMaster am = new ArchivoMaster();
-        am.escribirArchivoMaestro();
+        //am.escribirArchivoMaestro();
         am.leer_secuencual_maestro();
-        //am.leer_secuencual_aristas();
+        am.leer_secuencual_aristas();
         //prueba de fuego///xD ABC
         
     }

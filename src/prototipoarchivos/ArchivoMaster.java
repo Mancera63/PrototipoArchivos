@@ -30,7 +30,7 @@ public class ArchivoMaster {
         Scanner entrada = new Scanner(System.in);
 
         do {
-            //archM.seek(archM.length());
+            archM.seek(archM.length());
             archIndice.seek(archIndice.length());
 
             System.out.println("Ingresa la llave de la ciudad origen");
@@ -49,8 +49,8 @@ public class ArchivoMaster {
             //int x=entrada.nextInt();
             //if(x==1){
             do {
-                archM.seek(archM.length());
-                archAristas.seek(archM.length());
+                //archM.seek(archM.length());
+                archAristas.seek(archAristas.length());
 
                 archAristas.writeChar(llave);//ingreso origen en aristas
 
@@ -73,14 +73,15 @@ public class ArchivoMaster {
                 y = entrada.nextInt();
                 //aqui llenas ENL checalo xD
                 if (y == 1) {
-                    archAristas.writeLong(archAristas.getFilePointer() + 1);//nose si es asi checalo creo no xD
-                    //if (z == 0) {
+                    archAristas.writeLong(archAristas.getFilePointer()/12);//nose si es asi checalo creo no xD
+                    if (z == 0) {
                         //archM.writeChar(llaveDes);
-                        archM.writeLong(archAristas.getFilePointer());
-                        //z = 1;
-                    //}
+                        //archM.writeLong(archAristas.getFilePointer());
+                        z = 1;
+                    }
                 } else {
                     archAristas.writeLong(0);
+                    //archM.writeLong(0);
                 }
 
             } while (y == 1);
@@ -97,8 +98,8 @@ public class ArchivoMaster {
 
         RandomAccessFile leer_archi = new RandomAccessFile("terminales", "r");
         while ((ap_actual = leer_archi.getFilePointer()) != (ap_final = leer_archi.length())) {
-            llave = leer_archi.readChar();
-            System.out.println(llave);
+            //llave = leer_archi.readChar();
+            System.out.println(leer_archi.readChar());
             char nombre[] = new char[20], temp;
             for (int c = 0; c < nombre.length; c++) {
                 temp = leer_archi.readChar();
@@ -108,7 +109,7 @@ public class ArchivoMaster {
             System.out.println(nombre);
             //System.out.println(leer_archi.readUTF());
             //clasifica = leer_archi.readDouble();
-            System.out.println(leer_archi.readLong());
+            //System.out.println(leer_archi.readLong());
             //ar.insertar(llave, i);
             //i++;
         }
@@ -117,27 +118,16 @@ public class ArchivoMaster {
     
     void leer_secuencual_aristas() throws IOException {
         long ap_actual, ap_final;
-        int i=1;
+        //int i=1;
 
         RandomAccessFile leer_archi = new RandomAccessFile("aristas", "r");
         while ((ap_actual = leer_archi.getFilePointer()) != (ap_final = leer_archi.length())) {
-            //llave = leer_archi.readChar();
+            
             System.out.println(leer_archi.readChar());
             System.out.println(leer_archi.readChar());
             System.out.println(leer_archi.readDouble());
             System.out.println(leer_archi.readLong());
-            /*char nombre[] = new char[20], temp;
-            for (int c = 0; c < nombre.length; c++) {
-                temp = leer_archi.readChar();
-                nombre[c] = temp;
-            }
-            new String(nombre).replace('\0', ' ');
-            System.out.println(nombre);
-            //System.out.println(leer_archi.readUTF());
-            //clasifica = leer_archi.readDouble();
-            System.out.println(leer_archi.readLong());
-            //ar.insertar(llave, i);
-            i++;*/
+            
         }
         leer_archi.close();
     }
