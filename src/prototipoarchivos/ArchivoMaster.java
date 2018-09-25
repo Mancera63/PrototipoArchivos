@@ -69,10 +69,10 @@ public class ArchivoMaster {
                 archIndice.writeChar(llaveDes);
                 archIndice.writeLong(((archM.getFilePointer() - 2) / 40) + 1);
                 posicion=(int)((archM.getFilePointer() - 2) / 40) + 1;
-                System.out.println("posicionArbol: "+posicion);
-                arbol.insertar(llaveDes,posicion);
-                System.out.println("Arbol");
-                arbol.imprimirEntreConNivel();
+                //System.out.println("posicionArbol: "+posicion);
+                //arbol.insertar(llaveDes,posicion);
+                //System.out.println("Arbol");
+                //arbol.imprimirEntreConNivel();
 
                 System.out.println("Nombre de la ciudad");
                 ciudadDes = entrada.next();
@@ -166,8 +166,11 @@ public class ArchivoMaster {
         RandomAccessFile leer_archi = new RandomAccessFile("indice", "r");
         while ((ap_actual = leer_archi.getFilePointer()) != (ap_final = leer_archi.length())) {
 
-            System.out.println(leer_archi.readChar());
-            System.out.println(leer_archi.readLong());
+            llave=leer_archi.readChar();
+            posicion=(int)leer_archi.readLong();
+            arbol.insertar(llave,posicion);
+            System.out.println(llave);
+            System.out.println(posicion);
             System.out.println("");
 
         }
