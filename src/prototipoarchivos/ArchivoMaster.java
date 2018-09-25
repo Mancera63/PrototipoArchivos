@@ -241,7 +241,7 @@ public class ArchivoMaster {
                 archM.readChar();
                 System.out.println(nombre);
                 System.err.println("M: "+archM.readChar()); //aqui muestra el SIG
-                ady=archM.readLong();
+                ady=1;
                 System.err.println("M: "+ady); // aqui muestra el ADY
             
                 ///////////////////mide la longitud de archi aristas///////////////////////////////
@@ -254,6 +254,8 @@ public class ArchivoMaster {
                 int a=1;
                 do{
                     desplazamientoA=(ady-1)*lregM;
+                    System.out.println("ady: "+ady);
+                    archAristas.seek(desplazamientoA);
                     System.out.println("\nLos datos del registro Aristas son: ");
                     System.out.println("A: "+archAristas.readChar());
                     destin=archAristas.readChar();

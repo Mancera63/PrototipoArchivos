@@ -69,19 +69,11 @@ public class Arbol {
         imprimirEntreConNivel(raiz,1);
         System.out.println();
     }
-        private void imprimirEntreConNivel(Nodo tmp, int nivel){
-
+    private void imprimirEntreConNivel(Nodo tmp, int nivel){
         if(tmp !=null){
-
             imprimirEntreConNivel(tmp.izq,nivel+1);
-
- 
-
-                    System.out.println(tmp.llave + "("+nivel+")  ");
-
-                    imprimirEntreConNivel(tmp.der,nivel+1);
-
+            System.out.println(tmp.llave + "("+nivel+")  ");
+            imprimirEntreConNivel(tmp.der,nivel+1);
         }
-
     }
 }
